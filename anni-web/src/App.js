@@ -27,6 +27,10 @@ export default function AnniversarySurprise() {
     Math.floor(Math.random() * memories.length)
   );
   const [password, setPassword] = useState("");
+  const [showCard, setShowCard] = useState(false);
+  const [firstLoad, setFirstLoad] = useState(true);
+  const [step, setStep] = useState(0);
+
 
   const handleAuth = () => {
     if (password === "loveu") {
@@ -41,6 +45,7 @@ export default function AnniversarySurprise() {
       newIndex = Math.floor(Math.random() * memories.length);
     } while (newIndex === current);
     setCurrent(newIndex);
+    if (firstLoad) setFirstLoad(false);
   };
 
   return (
@@ -65,7 +70,7 @@ export default function AnniversarySurprise() {
       )}
 
       {authenticated && (
-        <div className="absolute inset-0 flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0 flex flex-col items-center justify-center overflow-hidden">
           {/* Heart Zoom Transition */}
           <AnimatePresence>
             {showHearts &&
@@ -91,20 +96,48 @@ export default function AnniversarySurprise() {
               )
             }
           </AnimatePresence>
+          
+          <AnimatePresence>
+            <motion.div
+              key="title"
+              initial={{ opacity: 0, scale: 0, y: 0 }}
+              animate={
+                step === 0
+                  ? { opacity: 1, scale: 1.2 } 
+                  : { y: -300, opacity: 1, scale: 1.2} 
+              }
+              transition={
+                step === 0
+                  ? { duration: 1, ease: "easeInOut"}
+                  : { delay: 0.5, duration: 1, ease: "easeInOut" }
+              }
+              onAnimationComplete={() => {
+                if (step === 0) setStep(1); 
+                
+                else setShowCard(true);   
+              }}
+              className="absolute z-10"
+            >
+              <h1 className="text-4xl md:text-5xl font-bold text-pink-600 text-center p-4 rounded-xl">
+                Happy 3rd Years Anniversary! 🎉
+              </h1>
+              
+            </motion.div>
+          </AnimatePresence>
 
           {/* Memory Card */}
+          {showCard && (
           <AnimatePresence mode="wait">
             <motion.div
               key={current}
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.8 }}
-              transition={{ 
-                duration: 1 }}
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{ opacity: 1, scale: 1 , transition: { duration: firstLoad ? 6 : 0.8, ease: "easeInOut" } }}
+              exit={{ opacity: 0, scale: 0, transition: { duration: 0.8, ease: "easeInOut" } }}
+              
               className="relative z-10"
             >
               <div className="max-w-sm bg-white shadow-2xl rounded-2xl overflow-hidden">
-                <img src={memories[current].img} className="w-full h-56 object-cover" />
+                <img src={memories[current].img} alt="memory" className="w-full h-56 object-cover" />
                 <div className="p-4 text-center">
                   <h3 className="font-semibold text-lg text-pink-600">
                     {memories[current].date}
@@ -120,6 +153,7 @@ export default function AnniversarySurprise() {
               </div>
             </motion.div>
           </AnimatePresence>
+          )}
         </div>
       )}
     </div>
