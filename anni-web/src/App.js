@@ -23,13 +23,12 @@ const memories = [
 export default function AnniversarySurprise() {
   const [authenticated, setAuthenticated] = useState(false);
   const [showHearts, setShowHearts] = useState(false);
-  const [current, setCurrent] = useState(
-    Math.floor(Math.random() * memories.length)
-  );
+  const [current, setCurrent] = useState(0);
   const [password, setPassword] = useState("");
   const [showCard, setShowCard] = useState(false);
   const [firstLoad, setFirstLoad] = useState(true);
   const [step, setStep] = useState(0);
+  const [last, setLast] = useState(false);
 
 
   const handleAuth = () => {
@@ -40,11 +39,12 @@ export default function AnniversarySurprise() {
   };
 
   const shuffleMemory = () => {
-    let newIndex;
-    do {
-      newIndex = Math.floor(Math.random() * memories.length);
-    } while (newIndex === current);
-    setCurrent(newIndex);
+    if (current === memories.length - 1) {
+      setLast(true);
+    }
+    else {
+      setCurrent(current + 1);
+    }
     if (firstLoad) setFirstLoad(false);
   };
 
@@ -129,7 +129,7 @@ export default function AnniversarySurprise() {
           {showCard && (
           <AnimatePresence mode="wait">
             <motion.div
-              key={current}
+              key={last ? "last" : current}
               initial={{ opacity: 0, scale: 0 }}
               animate={{ opacity: 1, scale: 1 , transition: { duration: firstLoad ? 6 : 0.8, ease: "easeInOut" } }}
               exit={{ opacity: 0, scale: 0, transition: { duration: 0.8, ease: "easeInOut" } }}
@@ -137,19 +137,29 @@ export default function AnniversarySurprise() {
               className="relative z-10"
             >
               <div className="max-w-sm bg-white shadow-2xl rounded-2xl overflow-hidden">
-                <img src={memories[current].img} alt="memory" className="w-full h-56 object-cover" />
-                <div className="p-4 text-center">
-                  <h3 className="font-semibold text-lg text-pink-600">
-                    {memories[current].date}
-                  </h3>
-                  <p className="text-gray-700 mt-2">{memories[current].desc}</p>
-                  <button
-                    onClick={shuffleMemory}
-                    className="mt-4 w-full bg-pink-500 text-white py-2 rounded-xl shadow hover:bg-pink-600 transition"
-                  >
-                    Next Memory 💌
-                  </button>
-                </div>
+                {last ? (
+                  <div className="p-8 text-center">
+                    <h3 className="font-semibold text-lg text-pink-600">
+                      Let's take our new memory! 🎉
+                    </h3>
+                  </div>
+                ) : (
+                      <>
+                      <img src={memories[current].img} alt="memory" className="w-full h-56 object-cover" />
+                      <div className="p-4 text-center">
+                        <h3 className="font-semibold text-lg text-pink-600">
+                          {memories[current].date}
+                        </h3>
+                        <p className="text-gray-700 mt-2">{memories[current].desc}</p>
+                        <button
+                          onClick={shuffleMemory}
+                          className="mt-4 w-full bg-pink-500 text-white py-2 rounded-xl shadow hover:bg-pink-600 transition"
+                        >
+                          Next 
+                        </button>
+                      </div>
+                      </>
+                )}
               </div>
             </motion.div>
           </AnimatePresence>
