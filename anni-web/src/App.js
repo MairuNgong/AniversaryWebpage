@@ -4,20 +4,66 @@ import { motion, AnimatePresence } from "framer-motion";
 // Example memory dict
 const memories = [
   {
-    img: "/mems/mem1.png",
-    date: "2023-05-14",
-    desc: "The day we had our first trip together ❤️",
+    img: "/mems/first.jpg",
+    date: "01-10-2022",
+    desc: "First Date 💕",
   },
   {
-    img: "/mems/mem2.png",
-    date: "2023-08-20",
-    desc: "Our lovely coffee date ☕💘",
+    img: "/mems/second.jpg",
+    date: "03-05-2023",
+    desc: "ได้ปุยเมฆมาแล้ว",
   },
   {
-    img: "/mems/mem3.png",
-    date: "2024-02-14",
-    desc: "Valentine’s surprise dinner 💕",
+    img: "/mems/third.jpg",
+    date: "26-08-2023",
+    desc: "My Birthday 🎂",
   },
+  {
+    img: "/mems/forth.jpg",
+    date: "11-09-2023",
+    desc: "พาปุ๊กกุมาอยู่ด้วยกัน",
+  },
+  {
+    img: "/mems/fifth.jpg",
+    date: "30-10-2023",
+    desc: "วันเกิดคนน่ารัก 🎂",
+  },
+  {
+    img: "/mems/sixth.jpg",
+    date: "4-11-2023",
+    desc: "ไปหา totoro 🐈",
+  },
+  {
+    img: "/mems/seven.jpg",
+    date: "02-12-2023",
+    desc: "ไปนอนบ้านแฟน",
+  },
+  {
+    img: "/mems/eight.jpg",
+    date: "21-09-2024",
+    desc: "ไปเที่ยวววว",
+  },
+  { img: "/mems/eight2.jpg",
+    date: "25-12-2024",
+    desc: "merry xmas 🎄",
+  },
+  { img: "/mems/nine.jpg",
+    date: "14-02-2025",
+    desc: "valentine's day 💘",
+  },
+  { img: "/mems/tenth.jpg",
+    date: "27-02-2025",
+    desc: "Aquarium date🐠",
+  },
+  { img: "/mems/eleventh.jpg",
+    date: "27-07-2025",
+    desc: "เที่ยวagain + เลี้ยงเด็ก",
+  },
+  { img: "/mems/twelfth.jpg",
+    date: "26-08-2025",
+    desc: "my birthday with lego ด้วย ⭐",
+  },
+
 ];
 
 export default function AnniversarySurprise() {
@@ -140,7 +186,7 @@ export default function AnniversarySurprise() {
                 {last ? (
                   <div className="p-8 text-center">
                     <h3 className="font-semibold text-lg text-pink-600">
-                      Let's take our new memory! 🎉
+                      Let's take our new memory from now! 🎉
                     </h3>
                   </div>
                 ) : (
